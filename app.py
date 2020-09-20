@@ -4,6 +4,7 @@ from kivy.config import Config
 from kivy.core.window import Window
 
 from grid import TheGrid
+from read_matrix import read_matrix
 
 MAX_SIZE = 1024
 
@@ -21,8 +22,11 @@ class AIApp(App):
     #   - We are using this function to get win witch cell the mouse is on
     Window.bind(mouse_pos=self.on_mouse_pos)
 
+    # Reading the matrix from file
+    map_matrix = read_matrix("map.csv")
+
     # Returning our main Widget, witch is the grid of cells
-    return TheGrid()
+    return TheGrid(map_matrix)
 
   def on_start(self):
     print('Starting app!')
