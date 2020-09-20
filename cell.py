@@ -8,7 +8,8 @@ class Cell(Button):
   def __init__(self, value, **kwargs):
     super(Cell, self).__init__(**kwargs)
     self.value = value
-    
+    self.disabled = True
+    self.background_disabled_normal = ''
     if self.value == 'S':
       self.background_color = (0, 1, 0, 1)
     elif self.value == 'E':
@@ -23,4 +24,5 @@ class Cell(Button):
       self.background_color = (0, 0, 1, 1)
 
   def hovered(self):
+    # self.background_color = (0, 0, 1, 1)
     pass
