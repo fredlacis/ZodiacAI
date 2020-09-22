@@ -1,12 +1,13 @@
 import time
 import random
+import sys
 
 from tkinter import *
 
-from read_matrix import read_matrix
-from get_color import get_color
+from utils.read_matrix import read_matrix
+from utils.get_color import get_color
 
-zodiac_map = read_matrix('./map.csv')
+zodiac_map = read_matrix('../maps/' + sys.argv[1] + '.csv')
 valueList = ['1', '5', '200', 'S', 'E', '0']
 
 class Cell():
@@ -70,5 +71,5 @@ if __name__ == "__main__" :
         
         app.update()
 
-        time.sleep(0.1)
+        # time.sleep(0.1)
     
