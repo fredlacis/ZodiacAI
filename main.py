@@ -7,7 +7,7 @@ from grid import Grid
 
 # Window configuration
 ROWS = 42
-WIDTH = ROWS * 19
+WIDTH = ROWS * 23
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.display.set_caption("Zodiac AI")
 
