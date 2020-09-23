@@ -12,7 +12,7 @@ WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.display.set_caption("Zodiac AI")
 
 def main(win, rows, width):
-  file_path = './maps/test_map_2.csv'
+  file_path = './maps/map.csv'
   grid = Grid(win, rows, width, file_path)
 
   run = True
