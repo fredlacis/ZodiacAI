@@ -15,10 +15,13 @@ def main(win, rows, width):
   file_path = './maps/map.csv'
   grid = Grid(win, rows, width, file_path)
 
+  #debug
+  see_every_cost = False
+
   run = True
   started = False
   while run:
-    grid.draw()
+    grid.draw(see_every_cost)
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         run = False
@@ -33,10 +36,13 @@ def main(win, rows, width):
             for cell in row:
               cell.update_neighbors(grid.matrix)
           print("Starting algorithm")
-          algorithm(grid)
+          algorithm(grid, see_every_cost)
 
         if event.key == pygame.K_r:
           grid = Grid(win, rows, width, file_path)
+
+        if event.key == pygame.K_c:
+          see_every_cost = not see_every_cost
 
 
   pygame.quit()

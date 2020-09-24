@@ -1,7 +1,11 @@
 import pygame
+from pygame import Color, font
 from colors import *
 from utils import get_color
 from cell_types import CellTypes
+
+pygame.font.init()
+FONT = pygame.font.SysFont(pygame.font.get_default_font(), 15)
 
 class Cell:
 
@@ -13,6 +17,10 @@ class Cell:
     self.x = row * width
     self.y = col * width
     self.total_rows = total_rows
+    self.cost_util_here = 0
+    # Setup font
+    pygame.font.init()
+    self.font = pygame.font.SysFont(pygame.font.get_default_font(), 25)
     # For the algorithm
     self.neighbors = []
     self.was_opened = False
@@ -45,7 +53,8 @@ class Cell:
   def is_open(self):
     return self.was_opened
 
-  def opened(self):
+  def opened(self, cost_util_here):
+    self.cost_util_here = cost_util_here
     self.was_opened = True
 
   def on_short_path(self):
@@ -57,15 +66,24 @@ class Cell:
   def get_type(self):
     return self.cell_type
 
-  def draw(self, win):
+  def draw(self, win, see_every_cost):
+    r, g, b = get_color(self.cell_type, self.cost)
+    color = Color((r, g, b))
     if self.is_path:
-      pygame.draw.rect(win, BLACK, (self.x, self.y, self.width, self.width))
+      color = Color((r/2, g/2, b/2))
     elif self.was_visited:
-      pygame.draw.rect(win, PURPLE, (self.x, self.y, self.width, self.width))
+      # color += Color(PURPLE)
+      color = Color((r*2 if r*2 <= 255 else 255,g,b))
     elif self.was_opened:
-      pygame.draw.rect(win, ORANGE, (self.x, self.y, self.width, self.width))
-    else:
-      pygame.draw.rect(win, get_color(self.cell_type, self.cost), (self.x, self.y, self.width, self.width))
+      # color += Color(ORANGE)
+      color = Color((r*2 if r*2 <= 255 else 255,g*2 if g*2 <= 255 else 255,b/3))
+
+    pygame.draw.rect(win, color, (self.x, self.y, self.width, self.width))
+
+    if (self.was_opened and not self.was_visited) or see_every_cost:
+      text = FONT.render(str(self.cost_util_here), True, BLACK)
+      text_rect = text.get_rect(center=(self.x+self.width/2, self.y+self.width/2))
+      win.blit(text, text_rect)
 
   def update_neighbors(self, matrix):
     if self.row < self.total_rows - 1: #DOWN

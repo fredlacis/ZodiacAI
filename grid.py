@@ -43,12 +43,12 @@ class Grid:
       for j in range(self.rows):
         pygame.draw.line(self.win, GREY, (j * gap, 0), (j * gap, self.width))
 
-  def draw(self):
+  def draw(self, see_every_cost):
     self.win.fill(WHITE)
 
     for row in self.matrix:
       for cell in row:
-        cell.draw(self.win)
+        cell.draw(self.win, see_every_cost)
 
     self.draw_grid_lines()
     pygame.display.update()
