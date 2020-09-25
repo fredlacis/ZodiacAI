@@ -4,6 +4,7 @@ from pathfinder import *
 from colors import *
 from distance import *
 from grid import Grid
+from utils import read_matrix
 
 # Window configuration
 ROWS = 42
@@ -12,8 +13,8 @@ WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.display.set_caption("Zodiac AI")
 
 def main(win, rows, width):
-  file_path = './maps/map.csv'
-  grid = Grid(win, rows, width, file_path)
+  matrix = read_matrix('./maps/map.csv')
+  grid = Grid(win, rows, width, matrix)
 
   #debug
   see_every_cost = False

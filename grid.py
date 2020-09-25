@@ -2,39 +2,45 @@ import pygame
 from cell import Cell
 from cell_types import CellTypes
 from colors import *
-from utils import read_matrix
 
 class Grid:
-  def __init__(self, win, rows, width, file_path):
+  def __init__(self, win, rows, width, matrix):
+    # Attributes for drawing grid on window
     self.win = win
     self.width = width
     self.rows = rows
     self.start = None
     self.end = None
-    csv_matrix = read_matrix(file_path)
-    self.matrix = self.make_grid(csv_matrix)
 
+    # Organize grid according to matrix
+    self.matrix = self.make_grid(matrix)
+
+  # Get matrix
   def get_matrix(self):
     return self.matrix
 
+  # Get grid start and end
   def get_start_end(self):
     return self.start, self.end
 
-  def make_grid(self, csv_matrix):
+  # Organize grid according to matrix 
+  def make_grid(self, matrix):
     grid = []
     cell_width = self.width // self.rows
+    
     for i in range(self.rows):
       grid.append([])
       for j in range(self.rows):
-        cell = Cell(i, j, cell_width, self.rows, csv_matrix[j][i])
-        if cell.get_type() == CellTypes.start:
+        cell = Cell(i, j, cell_width, self.rows, matrix[j][i])
+        if cell.cell_type == CellTypes.start:
           self.start = cell
-        elif cell.get_type() == CellTypes.end:
+        elif cell.cell_type == CellTypes.end:
           self.end = cell
         grid[i].append(cell)
 
     return grid
 
+  # Draw Grid lines between cells
   def draw_grid_lines(self):
     gap = self.width // self.rows
     # TODO: Check this
@@ -43,6 +49,7 @@ class Grid:
       for j in range(self.rows):
         pygame.draw.line(self.win, GREY, (j * gap, 0), (j * gap, self.width))
 
+  # Draw grid on window based on its attributes
   def draw(self, see_every_cost):
     self.win.fill(WHITE)
 
