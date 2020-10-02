@@ -1,10 +1,9 @@
 import pygame
-
-from pathfinder import *
-from colors import *
-from distance import *
+#Internal modules
+from pathfinder import algorithm
 from grid import Grid
 from utils import read_matrix
+# pylint: disable=no-member
 
 # Window configuration
 ROWS = 42
@@ -40,7 +39,7 @@ def main(win, rows, width):
           algorithm(grid, see_every_cost)
 
         if event.key == pygame.K_r:
-          grid = Grid(win, rows, width, file_path)
+          grid = Grid(win, rows, width, matrix)
 
         if event.key == pygame.K_c:
           see_every_cost = not see_every_cost

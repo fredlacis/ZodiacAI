@@ -1,6 +1,6 @@
 import pygame
 from pygame import Color, font
-from colors import *
+from colors import BLACK
 from utils import get_color
 from cell_types import CellTypes
 

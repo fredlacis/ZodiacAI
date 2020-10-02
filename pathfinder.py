@@ -5,6 +5,7 @@ from queue import PriorityQueue
 from distance import *
 import math
 import time
+# pylint: disable=no-member
 
 def algorithm(grid, see_every_cost):
   print("Setting variables")

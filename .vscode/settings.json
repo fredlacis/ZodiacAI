@@ -1,5 +1,9 @@
 {
   "cSpell.words": [
-    "pygame"
+    "astype",
+    "blit",
+    "numpy",
+    "pygame",
+    "pylint"
   ]
 }

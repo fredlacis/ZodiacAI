@@ -1,7 +1,7 @@
 import csv
 import numpy
 from cell_types import CellTypes
-from colors import *
+from colors import RED, GREEN, GREY, LIGHT_GRAY, DARK_GRAY, BLUE, BLACK
 
 def read_matrix(path):
   reader = csv.reader(open(path, "r"), delimiter=",")

@@ -1,7 +1,7 @@
 import pygame
 from cell import Cell
 from cell_types import CellTypes
-from colors import *
+from colors import GREY, WHITE
 
 class Grid:
   def __init__(self, win, rows, width, matrix):
