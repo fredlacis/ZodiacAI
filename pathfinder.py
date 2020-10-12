@@ -1,6 +1,7 @@
 import pygame
 from grid import Grid
 from cell import Cell
+from cell_types import CellTypes
 from queue import PriorityQueue
 from distance import *
 import math
@@ -50,7 +51,13 @@ def algorithm(grid, see_every_cost):
       return True
 
     for neighbor in current.neighbors:
-      temp_g_score = g_score[current] + neighbor.get_cost() # ??
+      # Não contar o peso caso seja uma casa
+      if neighbor.cell_type != CellTypes.temple:
+        temp_g_score = g_score[current] + neighbor.get_cost() # ??
+      else:
+        # Lógica para quando for uma casa
+        temp_g_score = g_score[current]
+
       if temp_g_score < g_score[neighbor]:
         came_from[neighbor] = current
         g_score[neighbor] = temp_g_score
