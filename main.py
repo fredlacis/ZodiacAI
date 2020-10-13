@@ -3,8 +3,6 @@ import pygame
 from pathfinder import algorithm
 from grid import Grid
 from utils import read_matrix
-from battle_elements import Warrior
-from battleplanner import battleplanner
 # pylint: disable=no-member
 
 # Window configuration
@@ -47,9 +45,7 @@ def main(win, rows, width):
           see_every_cost = not see_every_cost
 
       if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEDOWN:
-        warriorFred = Warrior(1.0, 6)
-        warriorDavid = Warrior(0.9, 7)
-        battleplanner([50, 65, 70], [warriorFred, warriorDavid])
+        pass
 
   pygame.quit()
 
