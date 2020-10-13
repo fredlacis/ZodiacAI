@@ -9,11 +9,15 @@ class House:
     self.house_difficulty = house_difficulty
 
 class Knight:
-  def __init__(self, name, power):
+  def __init__(self, name, power, debug_name = ""):
     self.name = name
     self.power = power
     self.lifeCount = 5
     self.weakest = False
+    if debug_name == "":
+      self.debug_name = self.name
+    else:
+      self.debug_name = debug_name
 
 class House_Attack:
   def __init__(self, house, chosen_knights):
@@ -27,11 +31,18 @@ class House_Attack:
     return self.house.house_difficulty / total_power
 
   def print_self(self):
-    printed_str = "[🏛 -> " + str(self.house.house_difficulty)
+    printed_str = "[🏛 -> %4d" % (self.house.house_difficulty)
     for knight in self.chosen_knights:
-      printed_str += ", " + knight.name + ":" + str(knight.lifeCount)
+      printed_str += ", %20s : %1d" %(knight.debug_name, knight.lifeCount)
     printed_str += "] "
     print(printed_str)
+
+  def self_to_string(self):
+    printed_str = "[🏛 -> %4d" % (self.house.house_difficulty)
+    for knight in self.chosen_knights:
+      printed_str += ", %8s : %1d" %(knight.name, knight.lifeCount)
+    printed_str += "] "
+    return printed_str
 
 class Attack_Plan:
   def __init__(self, houses, available_knights, empty = False):
@@ -165,6 +176,13 @@ class Attack_Plan:
     print("-" * 60)
     for house_attack in self.plan:
       house_attack.print_self()
+
+  def self_to_string(self):
+    self_string = ""
+    for house_attack in self.plan:
+      self_string += house_attack.self_to_string() + "\n"
+    return self_string
+
 
   def print_total_time(self, index):
     print("Attack Plan %d Time = %.2f | Fitness = %.7f" % (index, self.total_time, self.fitness))

@@ -1,5 +1,6 @@
 import random
 import string
+from datetime import datetime
 from copy import deepcopy
 from math import floor
 from numpy import interp
@@ -7,11 +8,11 @@ from attack_plan import Knight, House, Attack_Plan
 
 # INPUT -------------------------------------------------------------------
 available_knights = [
-  Knight("\033[01;31mSeiya\033[00m", 1.5),
-  Knight("\033[01;32mIkki\033[00m", 1.4),
-  Knight("\033[01;33mShiryu\033[00m", 1.3),
-  Knight("\033[01;34mHyoga\033[00m", 1.2),
-  Knight("\033[01;35mShun\033[00m", 1.1)
+  Knight("Seiya", 1.5, "\033[01;31mSeiya\033[00m"),
+  Knight("Ikki", 1.4, "\033[01;32mIkki\033[00m"),
+  Knight("Shiryu", 1.3, "\033[01;33mShiryu\033[00m"),
+  Knight("Hyoga", 1.2, "\033[01;34mHyoga\033[00m"),
+  Knight("Shun", 1.1, "\033[01;35mShun\033[00m")
 ]
 
 houses = [ 
@@ -37,6 +38,23 @@ def find_weakest():
       weakest = knight
   weakest.weakest = True
 
+def log(attack_plan, generation_amount, population_size, mutation_rate):
+  f = open("result_logs.txt", "a")
+  f.write("┏" + "━" * 58 + "┓" + "\n")
+  f.write("┃" + " " * 19 + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " " * 20 + "┃" + "\n")
+  f.write("┗" + "━" * 58 + "┛" + "\n")
+  f.write("\t%29s: %d\n" % ("Generations", generation_amount))
+  f.write("\t%29s: %d\n" % ("Population", population_size))
+  f.write("\t%29s: %.3f\n" % ("Mutation rate", mutation_rate))
+  f.write("\t%29s: %.4f\n" % ("Time", attack_plan.total_time))
+  f.write("\t%29s: %.4f\n" % (" Fitness", attack_plan.fitness))
+  f.write("┏" + "━" * 58 + "┓" + "\n")
+  f.write("┃" + " " * 23 + "ATTACK PLAN" + " " * 24 + "┃" + "\n")
+  f.write("┗" + "━" * 58 + "┛" + "\n")
+  f.write(the_best.self_to_string())
+  f.write("━" * 60 + "\n")
+  f.write("\n")
+  f.close()
 
 class Population:
   def __init__(self, houses, available_knights, num):
@@ -64,10 +82,11 @@ class Population:
     population.order_by_fitness()
     self.mating_pool = []
 
-    for element in self.population:
+    best_half = self.population#[:len(self.population)//2]
+    for element in best_half:
       fitness = interp(element.fitness, [0, self.population[0].fitness], [0, 1])
       n = floor(fitness * 100)
-      for _number_of_occurances in range(n):
+      for _number_of_occurrences in range(n):
         self.mating_pool.append(element)
 
   def generate(self, mutation_rate):
@@ -107,9 +126,9 @@ class Population:
 
 
 # ------------------------------------------------------------------------
-GENERATION_AMOUNT = 200
-POP_MAX = 500
-MUTATION_RATE = 0.01
+GENERATION_AMOUNT = 2
+POP_MAX = 200
+MUTATION_RATE = 0.035
 
 find_weakest()
 population = Population(houses, available_knights, POP_MAX)
@@ -126,13 +145,14 @@ for generation in range(0, GENERATION_AMOUNT):
   # print("ORDER BY")
   population.order_by_fitness()
 
-  print("GENERATION ", population.current_generation, " | Best Time: ", population.population[0].total_time, " | Best Fitness: ", population.population[0].fitness)
+  print("GENERATION %4d" % population.current_generation, " | Best Time: %.3f" % population.population[0].total_time, " | Best Fitness: %.3f" % population.population[0].fitness)
   if population.population[0].fitness > the_best.fitness:
     the_best = population.population[0]
 
-population.print_self()
-print("-"*50)
+# population.print_self()
+print("-"*60)
 print("The best time is ", the_best.total_time, " and its fitness is ", the_best.fitness)
 print("BATTLEPLAN")
 the_best.print_self()
-print("-"*50)
+print("-"*60)
+log(the_best, GENERATION_AMOUNT, POP_MAX, MUTATION_RATE)
