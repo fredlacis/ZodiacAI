@@ -1,8 +1,13 @@
 import pygame
+
 #Internal modules
-from pathfinder import algorithm
+import pathfinder
+import battleplanner
+from attack_plan import Knight, House, Attack_Plan
+
 from grid import Grid
 from utils import read_matrix
+
 # pylint: disable=no-member
 
 # Window configuration
@@ -11,6 +16,20 @@ WIDTH = ROWS * 23
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 pygame.display.set_caption("Zodiac AI")
 
+# Genetic algorithm configuration
+GENERATION_AMOUNT = 200
+POP_MAX = 1000
+MUTATION_RATE = 0.01
+
+available_knights = [
+  Knight("Seiya", 1.5, "\033[01;31mSeiya\033[00m"),
+  Knight("Ikki", 1.4, "\033[01;32mIkki\033[00m"),
+  Knight("Shiryu", 1.3, "\033[01;33mShiryu\033[00m"),
+  Knight("Hyoga", 1.2, "\033[01;34mHyoga\033[00m"),
+  Knight("Shun", 1.1, "\033[01;35mShun\033[00m")
+]
+
+# Main execution
 def main(win, rows, width):
   matrix = read_matrix('./maps/map.csv')
   grid = Grid(win, rows, width, matrix)
@@ -35,8 +54,10 @@ def main(win, rows, width):
           for row in grid.matrix:
             for cell in row:
               cell.update_neighbors(grid.matrix)
-          print("Starting algorithm")
-          algorithm(grid, see_every_cost)
+          print("Starting pathfinder A* algorithm")
+          houses = pathfinder.algorithm(grid, see_every_cost)
+          print("Starting battleplan genetic algorithm")
+          battleplanner.algorithm(GENERATION_AMOUNT, POP_MAX, MUTATION_RATE, available_knights, houses)
 
         if event.key == pygame.K_r:
           grid = Grid(win, rows, width, matrix)

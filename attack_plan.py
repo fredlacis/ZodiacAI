@@ -4,8 +4,7 @@ from copy import deepcopy
 from math import pow, floor
 
 class House:
-  def __init__(self, house_num, house_difficulty):
-    self.house_num = house_num
+  def __init__(self, house_difficulty):
     self.house_difficulty = house_difficulty
 
 class Knight:

@@ -6,6 +6,9 @@ from queue import PriorityQueue
 from distance import *
 import math
 import time
+
+from attack_plan import House
+
 # pylint: disable=no-member
 
 def algorithm(grid, see_every_cost):
@@ -46,9 +49,9 @@ def algorithm(grid, see_every_cost):
     open_set_hash.remove(current)
 
     if current == end:
-      reconstruct_path(came_from, end, grid, see_every_cost)
+      houses = reconstruct_path(came_from, end, grid, see_every_cost)
       print("end found")
-      return True
+      return houses
 
     for neighbor in current.neighbors:
       # Não contar o peso caso seja uma casa
@@ -77,7 +80,15 @@ def algorithm(grid, see_every_cost):
     
 
 def reconstruct_path(came_from, current, grid, see_every_cost):
+  # Array to store houses an their dificulties
+  houses = []
+
   while current in came_from:
     current = came_from[current]
     current.on_short_path()
     grid.draw(see_every_cost)
+
+    if(current.cell_type == CellTypes.temple):
+      houses.insert(0, House(current.cost))
+
+  return houses
