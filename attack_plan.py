@@ -4,8 +4,8 @@ from copy import deepcopy
 from math import pow, floor
 
 class House:
-  def __init__(self, house_difficulty):
-    self.house_difficulty = house_difficulty
+  def __init__(self, difficulty):
+    self.difficulty = difficulty
 
 class Knight:
   def __init__(self, name, power, debug_name = ""):
@@ -27,17 +27,17 @@ class House_Attack:
     total_power = 0.0
     for knight in self.chosen_knights:
       total_power += knight.power
-    return self.house.house_difficulty / total_power
+    return self.house.difficulty / total_power
 
   def print_self(self):
-    printed_str = "[🏛 -> %4d" % (self.house.house_difficulty)
+    printed_str = "[🏛 -> %4d" % (self.house.difficulty)
     for knight in self.chosen_knights:
       printed_str += ", %20s : %1d" %(knight.debug_name, knight.lifeCount)
     printed_str += "] "
     print(printed_str)
 
   def self_to_string(self):
-    printed_str = "[🏛 -> %4d" % (self.house.house_difficulty)
+    printed_str = "[🏛 -> %4d" % (self.house.difficulty)
     for knight in self.chosen_knights:
       printed_str += ", %8s : %1d" %(knight.name, knight.lifeCount)
     printed_str += "] "

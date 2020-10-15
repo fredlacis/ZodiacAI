@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 import pygame
 
 #Internal modules
@@ -6,14 +7,15 @@ import battleplanner
 from attack_plan import Knight, House, Attack_Plan
 
 from grid import Grid
+from planner_tab import Planner_Tab
 from utils import read_matrix
-
-# pylint: disable=no-member
 
 # Window configuration
 ROWS = 42
-WIDTH = ROWS * 23
-WIN = pygame.display.set_mode((WIDTH, WIDTH))
+GRID_WIDTH = ROWS * 23
+TAB_WIDTH = 450
+
+WIN = pygame.display.set_mode((GRID_WIDTH + TAB_WIDTH, GRID_WIDTH))
 pygame.display.set_caption("Zodiac AI")
 
 # Genetic algorithm configuration
@@ -33,6 +35,7 @@ available_knights = [
 def main(win, rows, width):
   matrix = read_matrix('./maps/map.csv')
   grid = Grid(win, rows, width, matrix)
+  planner_tab = Planner_Tab(win, GRID_WIDTH, TAB_WIDTH)
 
   #debug
   see_every_cost = False
@@ -57,7 +60,7 @@ def main(win, rows, width):
           print("Starting pathfinder A* algorithm")
           houses = pathfinder.algorithm(grid, see_every_cost)
           print("Starting battleplan genetic algorithm")
-          battleplanner.algorithm(GENERATION_AMOUNT, POP_MAX, MUTATION_RATE, available_knights, houses)
+          battleplanner.algorithm(planner_tab, GENERATION_AMOUNT, POP_MAX, MUTATION_RATE, available_knights, houses)
 
         if event.key == pygame.K_r:
           grid = Grid(win, rows, width, matrix)
@@ -70,4 +73,4 @@ def main(win, rows, width):
 
   pygame.quit()
 
-main(WIN, ROWS, WIDTH)
+main(WIN, ROWS, GRID_WIDTH)

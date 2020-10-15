@@ -4,6 +4,7 @@ from colors import BLACK
 from utils import get_color
 from cell_types import CellTypes
 
+# Font config
 pygame.font.init()
 FONT = pygame.font.SysFont(pygame.font.get_default_font(), 15)
 
@@ -11,7 +12,6 @@ class Cell:
 
   def __init__(self, row, col, width, total_rows, map_value):
     # Setup font for diplaying weights
-    pygame.font.init()
     self.font = pygame.font.SysFont(pygame.font.get_default_font(), 25)
 
     # Attributes for drawing cell on grid

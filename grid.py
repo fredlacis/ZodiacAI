@@ -52,6 +52,7 @@ class Grid:
   # Draw grid on window based on its attributes
   def draw(self, see_every_cost):
     self.win.fill(WHITE)
+    pygame.draw.rect(self.win, WHITE, (0, 0, self.width, self.width))
 
     for row in self.matrix:
       for cell in row:
