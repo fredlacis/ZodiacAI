@@ -16,6 +16,7 @@ class Planner_Tab:
     self.font_50 = pygame.font.Font("assets/Roboto-Regular.ttf", 50)
     self.font_36 = pygame.font.Font("assets/Roboto-Regular.ttf", 36)
     self.font_24 = pygame.font.Font("assets/Roboto-Regular.ttf", 24)
+    self.font_20 = pygame.font.Font("assets/Roboto-Regular.ttf", 20)
 
     self.temple_img = pygame.image.load("assets/temple.png")
 
@@ -54,7 +55,7 @@ class Planner_Tab:
     self.win.blit(generation_txt, generation_rect)
 
     # Best result
-    best_result_txt = self.font_24.render("Best Result - Time: %.3fmin - Fitness: %.3f" % (attack_plan.total_time, attack_plan.fitness), True, BLACK)
+    best_result_txt = self.font_20.render("Best Result - Time: %.3fmin" % (attack_plan.total_time), True, BLACK)
     best_result_rect = best_result_txt.get_rect(center=(self.grid_width + self.tab_width/2, 136))
     self.win.blit(best_result_txt, best_result_rect)
 
