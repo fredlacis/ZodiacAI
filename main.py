@@ -14,6 +14,7 @@ from utils import read_matrix
 ROWS = 42
 GRID_WIDTH = ROWS * 23
 TAB_WIDTH = 450
+clock = pygame.time.Clock()
 
 WIN = pygame.display.set_mode((GRID_WIDTH + TAB_WIDTH, GRID_WIDTH))
 pygame.display.set_caption("Zodiac AI")
@@ -44,6 +45,7 @@ def main(win, rows, width):
   started = False
   while run:
     grid.draw(see_every_cost)
+    planner_tab.drawCurrent()
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         run = False
@@ -70,6 +72,8 @@ def main(win, rows, width):
 
       if event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEDOWN:
         pass
+
+      clock.tick(10)
 
   pygame.quit()
 
