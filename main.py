@@ -60,7 +60,8 @@ def main(win, rows, width):
             for cell in row:
               cell.update_neighbors(grid.matrix)
           print("Starting pathfinder A* algorithm")
-          houses = pathfinder.algorithm(grid, see_every_cost)
+          houses, total_cost = pathfinder.algorithm(grid, see_every_cost)
+          planner_tab.a_star_cost = total_cost
           print("Starting battleplan genetic algorithm")
           battleplanner.algorithm(planner_tab, GENERATION_AMOUNT, POP_MAX, MUTATION_RATE, available_knights, houses)
 

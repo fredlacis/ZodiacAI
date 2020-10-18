@@ -49,7 +49,7 @@ def algorithm(grid, see_every_cost):
     open_set_hash.remove(current)
 
     if current == end:
-      houses = reconstruct_path(came_from, end, grid, see_every_cost)
+      houses = reconstruct_path(came_from, end, grid, see_every_cost), end.cost_util_here
       print("end found")
       return houses
 

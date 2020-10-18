@@ -31,14 +31,23 @@ class Population:
 
     self.mating_pool = []
 
-    best_half = self.population#[:len(self.population)//2]
-    for element in best_half:
+    if random.randint(0,1):
+      one_percent = len(self.population)//100
+      max_index = max(len(self.population) - (one_percent * self.current_generation), len(self.population)//2)
+      chosen_part = self.population[:max_index]
+    else:
+      chosen_part = self.population
+
+    print(len(chosen_part))
+    
+    for element in chosen_part:
       fitness = interp(element.fitness, [0, self.population[0].fitness], [0, 1])
       n = floor(fitness * 100)
       for _number_of_occurrences in range(n):
         self.mating_pool.append(element)
 
   def generate(self, mutation_rate):
+    print(len(self.mating_pool))
     for i in range(len(self.population)):
       partnerA = random.choice(self.mating_pool)
       partnerB = random.choice(self.mating_pool)
@@ -58,6 +67,7 @@ class Population:
         safe_counter += 1
       
       child.mutate(mutation_rate)
+      # child.optmize(try_amount = 15)
       self.population[i] = child
     self.current_generation += 1
 

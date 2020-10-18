@@ -117,11 +117,9 @@ class Attack_Plan:
   def calc_fitness(self):
     self.calc_time()
     self.fitness = pow(((1/self.total_time) * 1000), 8)
+    return self.fitness
 
   def crossover(self, partner, houses, available_knights):
-    # print("PARENTS ---------")
-    # self.print_self()
-    # partner.print_self()
     
     child = Attack_Plan(houses, available_knights, empty=True)
 
@@ -151,9 +149,6 @@ class Attack_Plan:
           if attacker.name == knight.name:
             attacker.lifeCount -= 1
             child.plan[i].chosen_knights.append(attacker)
-
-    # print("\n---------- CHILD ----------\n")
-    # child.print_self()
     return child
 
   def mutate(self, mutationRate):
@@ -163,7 +158,6 @@ class Attack_Plan:
         current_house_knights = house_attack.chosen_knights
         house_attack.chosen_knights = self.plan[index_to_change].chosen_knights
         self.plan[index_to_change].chosen_knights = current_house_knights
-
 
   def is_complete(self):
     for house_attack in self.plan:

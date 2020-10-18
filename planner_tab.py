@@ -13,6 +13,7 @@ class Planner_Tab:
     self.grid_width = grid_width
     self.tab_width = tab_width
 
+    self.a_star_cost = 0
     self.population = None
     self.mutation_rate = None
     self.generation = None
@@ -62,26 +63,31 @@ class Planner_Tab:
     self.win.blit(title_txt, title_rect)
 
     # Population
-    pop_txt = self.font_24.render("Population size: " + str(population), True, BLACK)
+    pop_txt = self.font_20.render("Population size: %d | Mutation rate: %.3f" % (population, mutation_rate), True, BLACK)
     pop_rect = pop_txt.get_rect(center=(self.grid_width + self.tab_width/2, 52))
     self.win.blit(pop_txt, pop_rect)
 
     # Mutation rate
-    mutation_txt = self.font_24.render("Mutation rate: " + str(mutation_rate), True, BLACK)
-    mutation_rect = mutation_txt.get_rect(center=(self.grid_width + self.tab_width/2, 80))
-    self.win.blit(mutation_txt, mutation_rect)
+    # mutation_txt = self.font_24.render("Mutation rate: " + str(mutation_rate), True, BLACK)
+    # mutation_rect = mutation_txt.get_rect(center=(self.grid_width + self.tab_width/2, 80))
+    # self.win.blit(mutation_txt, mutation_rect)
 
     # Divider
-    pygame.draw.line(self.win, GREY, (self.grid_width, 97), (self.grid_width + self.tab_width, 97))
+    pygame.draw.line(self.win, GREY, (self.grid_width, 67), (self.grid_width + self.tab_width, 67))
 
     # Generation 
     generation_txt = self.font_24.render("Generation: " + str(generation), True, BLACK)
-    generation_rect = generation_txt.get_rect(center=(self.grid_width + self.tab_width/2, 114))
+    generation_rect = generation_txt.get_rect(center=(self.grid_width + self.tab_width/2, 85))
     self.win.blit(generation_txt, generation_rect)
 
     # Best result
     best_result_txt = self.font_20.render("Best Result - Time: %.3fmin" % (attack_plan.total_time), True, BLACK)
-    best_result_rect = best_result_txt.get_rect(center=(self.grid_width + self.tab_width/2, 136))
+    best_result_rect = best_result_txt.get_rect(center=(self.grid_width + self.tab_width/2, 110))
+    self.win.blit(best_result_txt, best_result_rect)
+
+    # Best result
+    best_result_txt = self.font_20.render("Total Time: %.3fmin" % (attack_plan.total_time + self.a_star_cost), True, BLACK)
+    best_result_rect = best_result_txt.get_rect(center=(self.grid_width + self.tab_width/2, 135))
     self.win.blit(best_result_txt, best_result_rect)
 
     # House attacks
