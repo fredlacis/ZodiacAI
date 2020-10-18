@@ -30,23 +30,24 @@ class House_Attack:
     return self.house.difficulty / total_power
 
   def print_self(self):
-    printed_str = "[🏛 -> %4d" % (self.house.difficulty)
+    printed_str = "[TEMPLE -> %4d" % (self.house.difficulty)
     for knight in self.chosen_knights:
       printed_str += ", %20s : %1d" %(knight.debug_name, knight.lifeCount)
     printed_str += "] "
     print(printed_str)
 
   def self_to_string(self):
-    printed_str = "[🏛 -> %4d" % (self.house.difficulty)
+    printed_str = "[TEMPLE -> %4d" % (self.house.difficulty)
     for knight in self.chosen_knights:
       printed_str += ", %8s : %1d" %(knight.name, knight.lifeCount)
     printed_str += "] "
     return printed_str
 
 class Attack_Plan:
-  def __init__(self, houses, available_knights, empty = False):
+  def __init__(self, houses, available_knights, weakest_live, empty = False):
     self.houses = deepcopy(houses)
     self.available_knights = deepcopy(available_knights)
+    self.weakest_live = weakest_live
 
     if not empty:
       self.plan = self.generate_random_attack_plan()
@@ -101,6 +102,9 @@ class Attack_Plan:
         if chosen_knight.lifeCount == 0:
           self.available_knights.remove(chosen_knight)
 
+      if not self.weakest_live and len(self.available_knights) == 0:
+        break
+
     return attack_plan
   
   def generate_empty_attack_plan(self):
@@ -121,7 +125,7 @@ class Attack_Plan:
 
   def crossover(self, partner, houses, available_knights):
     
-    child = Attack_Plan(houses, available_knights, empty=True)
+    child = Attack_Plan(houses, available_knights, self.weakest_live, empty=True)
 
     a_attackers = []
     for knight in range(floor(len(available_knights)/2)):

@@ -63,7 +63,7 @@ class Planner_Tab:
     self.win.blit(title_txt, title_rect)
 
     # Population
-    pop_txt = self.font_20.render("Population size: %d | Mutation rate: %.3f" % (population, mutation_rate), True, BLACK)
+    pop_txt = self.font_20.render("Population size: %d | Mutation rate: %.1f%%" % (population, mutation_rate*100), True, BLACK)
     pop_rect = pop_txt.get_rect(center=(self.grid_width + self.tab_width/2, 52))
     self.win.blit(pop_txt, pop_rect)
 

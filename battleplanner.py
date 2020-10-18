@@ -35,10 +35,11 @@ def find_weakest(available_knights):
   weakest.weakest = True
 
 # ------------------------------------------------------------------------
-def algorithm(planner_tab, generation_amount, pop_max, mutation_rate, available_knights, houses):
-
-  find_weakest(available_knights)
-  population = Population(houses, available_knights, pop_max)
+def algorithm(planner_tab, generation_amount, pop_max, mutation_rate, weakest_live, available_knights, houses):
+  
+  if weakest_live:
+    find_weakest(available_knights)
+  population = Population(houses, available_knights, pop_max, weakest_live)
 
   the_best = population.population[0]
 

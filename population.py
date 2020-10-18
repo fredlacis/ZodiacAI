@@ -6,16 +6,17 @@ from numpy import interp
 from attack_plan import Knight, House, Attack_Plan
 
 class Population:
-  def __init__(self, houses, available_knights, num):
+  def __init__(self, houses, available_knights, num, weakest_live):
     self.population = []
     self.mating_pool = []
     self.current_generation = 0
+    self.weakest_live = weakest_live
 
     self.houses = houses
     self.available_knights = available_knights
 
     for _i in range(num):
-      attack_plan = Attack_Plan(houses, available_knights)
+      attack_plan = Attack_Plan(houses, available_knights, weakest_live)
       self.population.append(attack_plan)
   
   def calc_fitness(self):

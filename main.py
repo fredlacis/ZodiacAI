@@ -23,6 +23,7 @@ pygame.display.set_caption("Zodiac AI")
 GENERATION_AMOUNT = 200
 POP_MAX = 1000
 MUTATION_RATE = 0.01
+WEAKEST_LIVE = True
 
 available_knights = [
   Knight("Seiya", 1.5, "\033[01;31mSeiya\033[00m"),
@@ -63,7 +64,7 @@ def main(win, rows, width):
           houses, total_cost = pathfinder.algorithm(grid, see_every_cost)
           planner_tab.a_star_cost = total_cost
           print("Starting battleplan genetic algorithm")
-          battleplanner.algorithm(planner_tab, GENERATION_AMOUNT, POP_MAX, MUTATION_RATE, available_knights, houses)
+          battleplanner.algorithm(planner_tab, GENERATION_AMOUNT, POP_MAX, MUTATION_RATE, WEAKEST_LIVE, available_knights, houses)
 
         if event.key == pygame.K_r:
           grid = Grid(win, rows, width, matrix)
